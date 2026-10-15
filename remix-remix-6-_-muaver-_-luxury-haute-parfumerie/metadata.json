@@ -1,0 +1,8 @@
+{
+  "name": "Remix Remix 6 \u003e MUAVER | Luxury Haute Parfumerie",
+  "description": "Crafted for Distinction By AUHS. Discover bespoke luxury fragrances and rare artisanal extraits.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

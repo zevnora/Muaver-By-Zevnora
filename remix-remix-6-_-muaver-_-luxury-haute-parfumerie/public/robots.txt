@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /adminAUHS
+Disallow: /adminauhs
+
+Sitemap: https://muaver.vercel.app/sitemap.xml

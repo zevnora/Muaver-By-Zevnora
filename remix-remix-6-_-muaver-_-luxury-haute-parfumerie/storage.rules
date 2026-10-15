@@ -1,0 +1,30 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Authentication and authorization helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Hardcoded permanent admin emails with guaranteed storage write/delete permissions
+    function isPermanentAdmin() {
+      return isAuthenticated() && (
+        ('email' in request.auth.token) && (
+          request.auth.token.email == 'ai.alizaib@gmail.com' ||
+          request.auth.token.email == 'zevnora.agency@gmail.com' ||
+          (request.auth.token.email != null && (
+            request.auth.token.email.lower() == 'ai.alizaib@gmail.com' ||
+            request.auth.token.email.lower() == 'zevnora.agency@gmail.com'
+          ))
+        )
+      );
+    }
+
+    // Public read for website assets (customers must be able to view perfume & banner images)
+    // Permanent admins and authenticated staff can upload, update, and delete images
+    match /{allPaths=**} {
+      allow read: if true;
+      allow write, delete: if isPermanentAdmin() || isAuthenticated();
+    }
+  }
+}

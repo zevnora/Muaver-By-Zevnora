@@ -1,0 +1,340 @@
+@import "tailwindcss";
+
+:root {
+  --navy-950: #050E28;
+  --navy-900: #0A1A4F;
+  --navy-800: #0E2263;
+  --navy-700: #142C7D;
+  --gold-500: #D4AF37;
+  --gold-600: #B89025;
+  --gold-400: #E2C04B;
+  --gold-300: #F0D27A;
+  --gold-100: #FDF9EE;
+  --gold-50: #FAF5E8;
+  --slate-900: #0F172A;
+  --slate-800: #1E293B;
+  --slate-600: #475569;
+  --slate-400: #94A3B8;
+  --slate-200: #E2E8F0;
+  --slate-100: #F1F5F9;
+  --slate-50: #F8FAFC;
+}
+
+body {
+  background-color: #FFFFFF;
+  color: #1E293B;
+  font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-cinzel,
+.font-heading {
+  font-family: 'Cinzel', serif;
+}
+
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Clean, crisp Gold Primary Button */
+.btn-gold,
+.btn-gold-primary {
+  background-color: #D4AF37;
+  color: #0A1A4F;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px 0 rgba(10, 26, 79, 0.1);
+}
+.btn-gold:hover,
+.btn-gold-primary:hover {
+  background-color: #E2C04B;
+  box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35);
+  transform: translateY(-1px);
+}
+.btn-gold:active,
+.btn-gold-primary:active {
+  transform: translateY(0);
+}
+
+/* Clean Gold Outline Button */
+.btn-gold-outline {
+  background: transparent;
+  color: #0A1A4F;
+  border: 1.5px solid #D4AF37;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+.btn-gold-outline:hover {
+  background-color: #FAF5E8;
+  border-color: #B89025;
+  color: #0A1A4F;
+}
+
+/* Clean Navy Button */
+.btn-navy {
+  background-color: #0A1A4F;
+  color: #FFFFFF;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+.btn-navy:hover {
+  background-color: #142C7D;
+}
+
+/* Standardized Gold Badges & Accents */
+.badge-gold {
+  background-color: #FAF5E8;
+  color: #B89025;
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.badge-navy {
+  background-color: #0A1A4F;
+  color: #F0D27A;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+/* Subtle clean gold text accent */
+.text-gold-accent {
+  color: #B89025;
+}
+
+.text-gold-bright {
+  color: #D4AF37;
+}
+
+.text-gold-gradient {
+  color: #B89025;
+}
+
+/* Clean subtle divider */
+.gold-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 2rem 0;
+  height: 1px;
+  background-color: #E2E8F0;
+}
+.gold-diamond {
+  display: none;
+}
+
+/* Custom minimal scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Scroll Reveal Animations - Visible by default, enhanced with JS */
+.scroll-reveal {
+  opacity: 1;
+  transform: none;
+}
+
+.scroll-reveal.has-scroll-anim {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal.has-scroll-anim.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+  will-change: auto;
+}
+
+.scroll-reveal-delay-1 { transition-delay: 0.05s; }
+.scroll-reveal-delay-2 { transition-delay: 0.1s; }
+.scroll-reveal-delay-3 { transition-delay: 0.15s; }
+.scroll-reveal-delay-4 { transition-delay: 0.2s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal,
+  .scroll-reveal.has-scroll-anim {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    will-change: auto !important;
+  }
+}
+
+/* MUAVER Branded Loader Animations */
+@keyframes muaverPulseAura {
+  0%, 100% {
+    transform: scale(0.95);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.85;
+  }
+}
+
+@keyframes muaverBreath {
+  0%, 100% {
+    transform: scale(0.97);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 1;
+  }
+}
+
+@keyframes muaverSpinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes muaverScanline {
+  0% {
+    top: 5%;
+    opacity: 0.2;
+  }
+  50% {
+    top: 90%;
+    opacity: 1;
+  }
+  100% {
+    top: 5%;
+    opacity: 0.2;
+  }
+}
+
+@keyframes shimmerSlide {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .muaver-loader-anim,
+  .muaver-loader-ring,
+  .muaver-loader-scanline,
+  .muaver-loader-aura {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* Print-specific layout for COD Invoice / Shipping Slip */
+@media print {
+  /* Hide all background content and admin UI */
+  html, body, #root {
+    background: #ffffff !important;
+    color: #0F172A !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    position: static !important;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  /* Unhide printable slip overlay and its contents */
+  #muaver-printable-slip-overlay,
+  #muaver-printable-slip-overlay *,
+  #muaver-printable-slip,
+  #muaver-printable-slip * {
+    visibility: visible !important;
+  }
+
+  #muaver-printable-slip-overlay {
+    position: static !important;
+    background: #ffffff !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    inset: auto !important;
+    display: block !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  #muaver-printable-slip {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 8mm 12mm !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: #ffffff !important;
+    color: #0F172A !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Completely remove on-screen buttons, pencil icons, and close controls */
+  .no-print,
+  .no-print * {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 8mm;
+  }
+}
+

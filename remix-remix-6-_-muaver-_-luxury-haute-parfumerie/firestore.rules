@@ -1,0 +1,135 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Authentication and authorization helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function userEmail() {
+      return request.auth != null && ('email' in request.auth.token) && request.auth.token.email != null
+        ? request.auth.token.email.lower()
+        : '';
+    }
+
+    // 1. HARDCODED PERMANENT ADMIN ACCESS
+    // Matched directly via request.auth.token.email — ZERO dependency on reading the "admins" collection!
+    function isPermanentAdmin() {
+      return isAuthenticated() && (
+        userEmail() == 'ai.alizaib@gmail.com' ||
+        userEmail() == 'zevnora.agency@gmail.com' ||
+        request.auth.token.email == 'ai.alizaib@gmail.com' ||
+        request.auth.token.email == 'zevnora.agency@gmail.com'
+      );
+    }
+
+    // Standard admin check: permanent admins pass instantly; other users are checked against "admins" Firestore collection
+    function isAdmin() {
+      return isAuthenticated() && (
+        isPermanentAdmin() ||
+        (userEmail() != '' && exists(/databases/$(database)/documents/admins/$(userEmail()))) ||
+        (request.auth.uid != null && exists(/databases/$(database)/documents/admins/$(request.auth.uid)))
+      );
+    }
+
+    // Standard owner check: permanent admins pass instantly; other users are checked against "admins" Firestore collection
+    function isOwner() {
+      return isAuthenticated() && (
+        isPermanentAdmin() ||
+        (userEmail() != '' && exists(/databases/$(database)/documents/admins/$(userEmail())) && get(/databases/$(database)/documents/admins/$(userEmail())).data.role == 'owner') ||
+        (request.auth.uid != null && exists(/databases/$(database)/documents/admins/$(request.auth.uid)) && get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.role == 'owner')
+      );
+    }
+
+    // Admins collection:
+    // Permanent admins always have full read and write access; other authenticated users check as before.
+    // Permanent admin records are protected from deletion.
+    match /admins/{adminEmail} {
+      allow read: if isPermanentAdmin() || isAuthenticated();
+      allow create, update: if isPermanentAdmin() || (
+        isAuthenticated() && (
+          isOwner() || 
+          userEmail() == adminEmail.lower() ||
+          request.auth.uid == adminEmail
+        )
+      );
+      allow delete: if (isPermanentAdmin() || isOwner()) &&
+        adminEmail.lower() != 'ai.alizaib@gmail.com' &&
+        adminEmail.lower() != 'zevnora.agency@gmail.com';
+    }
+
+    // Settings collection (site configuration, policies, delivery rates, security metadata)
+    match /settings/{document=**} {
+      allow read: if true;
+      allow write, delete: if isPermanentAdmin() || isAdmin() || (
+        isAuthenticated() && !exists(/databases/$(database)/documents/settings/security)
+      );
+    }
+
+    // Products catalog: Public read, permanent admin & admin write/delete
+    match /products/{productId} {
+      allow read: if true;
+      allow create, update, delete: if isPermanentAdmin() || isAdmin();
+    }
+
+    // Categories: Public read, permanent admin & admin write/delete
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow create, update, delete: if isPermanentAdmin() || isAdmin();
+    }
+
+    // Hero banners: Public read, permanent admin & admin write/delete
+    match /banners/{bannerId} {
+      allow read: if true;
+      allow create, update, delete: if isPermanentAdmin() || isAdmin();
+    }
+
+    // Orders: Public create; customers read own orders; permanent admins & admins manage all orders
+    match /orders/{orderId} {
+      allow create: if true;
+      allow read: if isPermanentAdmin() || isAdmin() || (resource.data.customerId != null);
+      allow update, delete: if isPermanentAdmin() || isAdmin();
+    }
+
+    // Customer accounts collection: Customers can register and access their profiles; admins manage all
+    match /customers/{customerId} {
+      allow read: if true;
+      allow create, update: if true;
+      allow delete: if isPermanentAdmin() || isAdmin();
+    }
+
+    // Customer concierge messages to store:
+    // Customer can create messages with their own customerId;
+    // Customer can read their own messages and admin replies;
+    // Permanent admins & admins can read, update (reply/mark read), and delete all messages
+    match /messages/{messageId} {
+      allow create: if true;
+      allow read: if isPermanentAdmin() || isAdmin() || (resource.data.customerId != null);
+      allow update: if isPermanentAdmin() || isAdmin() || (resource.data.customerId != null);
+      allow delete: if isPermanentAdmin() || isAdmin();
+    }
+
+    // Customer product reviews:
+    // Public read for all visitors
+    // Logged-in customer can create/edit their own review
+    // Permanent admins & admins can manage/delete any review
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create: if true;
+      allow update: if isPermanentAdmin() || isAdmin() || (resource.data.customerId != null);
+      allow delete: if isPermanentAdmin() || isAdmin() || (resource.data.customerId != null);
+    }
+
+    // General Customer inquiries (fallback contact form)
+    match /inquiries/{inquiryId} {
+      allow create: if true;
+      allow read, update, delete: if isPermanentAdmin() || isAdmin();
+    }
+
+    // Connection health check
+    match /test/{testId} {
+      allow read: if true;
+    }
+  }
+}

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+    <title>MUAVER | Luxury Brand</title>
+    <meta name="description" content="Crafted for Distinction By Ashar Ul Haq Siddiqui. Discover luxury fragrances and long-lasting perfumes." />
+    
+    <!-- OpenGraph & Social meta -->
+    <meta property="og:title" content="MUAVER | Luxury Brand" />
+    <meta property="og:description" content="Crafted for Distinction By Ashar Ul Haq Siddiqui. Discover luxury fragrances and long-lasting perfumes." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://i.ibb.co/ynpdPdvP/Full-Logo.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="MUAVER | Luxury Brand" />
+    <meta name="twitter:description" content="Crafted for Distinction By Ashar Ul Haq Siddiqui. Discover luxury fragrances and long-lasting perfumes." />
+
+    <!-- Mobile, Theme & PWA Manifest -->
+    <meta name="theme-color" content="#0A1A4F" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Favicon link tags for standard sizes (32x32, 16x16, default icon, shortcut icon, and apple-touch-icon) -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/M5Dq0xS9/Icon.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="https://i.ibb.co/M5Dq0xS9/Icon.png" />
+    <link rel="icon" type="image/png" href="https://i.ibb.co/M5Dq0xS9/Icon.png" />
+    <link rel="shortcut icon" href="https://i.ibb.co/M5Dq0xS9/Icon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/M5Dq0xS9/Icon.png" />
+    <link rel="apple-touch-icon" href="https://i.ibb.co/M5Dq0xS9/Icon.png" />
+
+    <!-- Preconnect & DNS-Prefetch for slow 3G network acceleration -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://images.unsplash.com" />
+    <link rel="dns-prefetch" href="https://i.ibb.co" />
+
+    <!-- Preload only the primary heading font (Cinzel) with font-display: swap -->
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap"
+    />
+
+    <!-- Maximum 2 Font Families with font-display: swap (Cinzel for headings, Montserrat for body) -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+      />
+    </noscript>
+  </head>
+  <body class="bg-[#0A1A4F] text-slate-900 antialiased selection:bg-[#D4AF37]/25 selection:text-[#0A1A4F]">
+    <div id="root">
+      <div style="min-height: 100vh; background-color: #0A1A4F; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Montserrat', sans-serif; color: #D4AF37; user-select: none;">
+        <div style="position: relative; width: 128px; height: 128px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px;">
+          <div style="position: absolute; inset: 0; border-radius: 9999px; border: 1px dashed rgba(212, 175, 55, 0.25);"></div>
+          <div style="position: absolute; inset: 8px; border-radius: 9999px; border: 2px solid transparent; border-top-color: #D4AF37; border-right-color: rgba(212, 175, 55, 0.5);"></div>
+          <img src="https://i.ibb.co/M5Dq0xS9/Icon.png" alt="MUAVER" width="60" height="60" style="width: 58px; height: 58px; object-fit: contain; filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.45));" />
+        </div>
+        <div style="font-size: 13px; letter-spacing: 0.24em; text-transform: uppercase; font-weight: 600; text-align: center; font-family: 'Cinzel', serif;">
+          Loading the collection...
+        </div>
+      </div>
+    </div>
+    <script>
+      // Clear legacy SW caches on startup to guarantee fresh module execution
+      if (typeof window !== 'undefined' && 'caches' in window) {
+        caches.keys().then(function(keys) {
+          keys.forEach(function(k) {
+            if (k === 'muaver-cache-v1') caches.delete(k);
+          });
+        });
+      }
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

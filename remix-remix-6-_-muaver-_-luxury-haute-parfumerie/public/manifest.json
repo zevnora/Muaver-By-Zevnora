@@ -1,0 +1,33 @@
+{
+  "id": "/",
+  "name": "MUAVER | Luxury Brand",
+  "short_name": "MUAVER",
+  "description": "Crafted for Distinction By AUHS. Rare Extrait de Parfum and Master Sillage.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#050F2E",
+  "theme_color": "#050F2E",
+  "categories": ["shopping", "lifestyle"],
+  "icons": [
+    {
+      "src": "https://i.ibb.co/M5Dq0xS9/Icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://i.ibb.co/ynpdPdvP/Full-Logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://i.ibb.co/M5Dq0xS9/Icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

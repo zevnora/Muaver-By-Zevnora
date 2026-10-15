@@ -1,0 +1,185 @@
+{
+  "entities": {
+    "AdminUser": {
+      "title": "AdminUser",
+      "description": "Authorized administrator or owner with access to the MUAVER executive console",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Admin email address in lowercase"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["owner", "admin"],
+          "description": "Role level determining privilege (owner can manage admins and handover; admin can manage store)"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Admin full name or display name"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp when admin access was granted"
+        },
+        "addedBy": {
+          "type": "string",
+          "description": "Email of the owner who granted access"
+        }
+      },
+      "required": ["email", "role"]
+    },
+    "SiteSettings": {
+      "title": "SiteSettings",
+      "description": "Global storefront configuration including delivery specifications, brand content, and store policies",
+      "type": "object",
+      "properties": {
+        "siteTitle": { "type": "string" },
+        "tagline": { "type": "string" },
+        "deliverySettings": {
+          "type": "object",
+          "description": "Shipping charges, delivery times, and free shipping thresholds"
+        },
+        "policies": {
+          "type": "object",
+          "description": "Store policies for Delivery, Returns, Refunds, Privacy, Terms, and COD"
+        }
+      },
+      "required": ["siteTitle"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Artisanal luxury fragrance with variants, olfactory notes, and inventory",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "edition": { "type": "string" },
+        "price": { "type": "number" },
+        "slug": { "type": "string" }
+      },
+      "required": ["name", "price"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer order with frozen item snapshots and Cash on Delivery details",
+      "type": "object",
+      "properties": {
+        "orderNumber": { "type": "string" },
+        "customer": { "type": "object" },
+        "items": { "type": "array" },
+        "subtotal": { "type": "number" },
+        "shippingFee": { "type": "number" },
+        "totalAmount": { "type": "number" },
+        "status": { "type": "string" }
+      },
+      "required": ["orderNumber", "totalAmount", "status"]
+    },
+    "CustomerInquiry": {
+      "title": "CustomerInquiry",
+      "description": "Patron inquiry or concierge message",
+      "type": "object",
+      "properties": {
+        "fullName": { "type": "string" },
+        "email": { "type": "string" },
+        "message": { "type": "string" }
+      },
+      "required": ["fullName", "email", "message"]
+    },
+    "BannerSlide": {
+      "title": "BannerSlide",
+      "description": "Hero banner slide for homepage slider",
+      "type": "object",
+      "properties": {
+        "heading": { "type": "string" },
+        "desktopImage": { "type": "string" },
+        "order": { "type": "number" },
+        "isActive": { "type": "boolean" }
+      },
+      "required": ["desktopImage"]
+    },
+    "CustomerProfile": {
+      "title": "CustomerProfile",
+      "description": "Registered customer profile with shipping information and phone",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "fullName": { "type": "string" },
+        "phone": { "type": "string" },
+        "city": { "type": "string" },
+        "address": { "type": "string" }
+      },
+      "required": ["uid", "email", "fullName", "phone"]
+    },
+    "CustomerMessage": {
+      "title": "CustomerMessage",
+      "description": "Customer message to store concierge and admin reply",
+      "type": "object",
+      "properties": {
+        "customerId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerEmail": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "messageText": { "type": "string" },
+        "orderReference": { "type": "string" },
+        "status": { "type": "string", "enum": ["New", "Read", "Replied"] },
+        "adminReply": { "type": "string" }
+      },
+      "required": ["customerId", "customerName", "customerEmail", "messageText", "status"]
+    },
+    "ProductReview": {
+      "title": "ProductReview",
+      "description": "Customer star rating and verified patron review for a specific perfume",
+      "type": "object",
+      "properties": {
+        "productId": { "type": "string" },
+        "productName": { "type": "string" },
+        "customerId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerEmail": { "type": "string" },
+        "rating": { "type": "number", "minimum": 1, "maximum": 5 },
+        "reviewText": { "type": "string" }
+      },
+      "required": ["productId", "customerId", "customerName", "rating", "reviewText"]
+    }
+  },
+  "firestore": {
+    "/admins/{adminEmail}": {
+      "schema": "AdminUser",
+      "description": "Collection of authorized administrators and owners. Access depends strictly on this collection."
+    },
+    "/settings/{settingDoc}": {
+      "schema": "SiteSettings",
+      "description": "Site configuration, delivery settings, and policy documents."
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Catalog of perfume flacons, notes, and variants."
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Orders placed by patrons."
+    },
+    "/inquiries/{inquiryId}": {
+      "schema": "CustomerInquiry",
+      "description": "Patron contact messages."
+    },
+    "/banners/{bannerId}": {
+      "schema": "BannerSlide",
+      "description": "Hero slider banner entries."
+    },
+    "/customers/{customerId}": {
+      "schema": "CustomerProfile",
+      "description": "Customer profile account documents, accessible to owner and admins."
+    },
+    "/messages/{messageId}": {
+      "schema": "CustomerMessage",
+      "description": "Messages sent by logged-in customers to the store and admin replies."
+    },
+    "/reviews/{reviewId}": {
+      "schema": "ProductReview",
+      "description": "Customer perfume reviews: public read, customer create and update their own, admin delete."
+    }
+  }
+}
